@@ -4,6 +4,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 ####################################
 #物理定数
@@ -46,10 +47,10 @@ x_mesh, t_mesh = np.meshgrid(x, t)
 
 #波動関数計算
 psi0 = np.sqrt(2/L) * np.sin(k0*(x_mesh+L/2)) * np.exp(-1j * omega0 * t_mesh)
+psi1 = np.sqrt(2/L) * np.sin(k1*(x_mesh+L/2)) * np.exp(-1j * omega1 * t_mesh)
+psi2 = np.sqrt(2/L) * np.sin(k2*(x_mesh+L/2)) * np.exp(-1j * omega2 * t_mesh)
+psi3 = np.sqrt(2/L) * np.sin(k3*(x_mesh+L/2)) * np.exp(-1j * omega3 * t_mesh)
 """
-psi1 = np.sqrt(2/L) * np.sin(k1*(x+L/2))
-psi2 = np.sqrt(2/L) * np.sin(k2*(x+L/2))
-psi3 = np.sqrt(2/L) * np.sin(k3*(x+L/2))
 psi4 = np.sqrt(2/L) * np.sin(k4*(x+L/2))
 psi5 = np.sqrt(2/L) * np.sin(k5*(x+L/2))
 """
@@ -58,10 +59,14 @@ fig = plt.figure(figsize =(10,6))
 ims = []
 for i in range(t_num):  
     img = plt.plot(x, psi0[i,:].real, color='blue')
-    #img += plt.plot(x, psi1, color='orange')
-    #img += plt.plot(x, psi2, color='green')
-    #img += plt.plot(x, psi3, color='red')
+    img += plt.plot(x, psi1[i,:].real, color='orange')
+    img += plt.plot(x, psi2[i,:].real, color='green')
+    img += plt.plot(x, psi3[i,:].real, color='red')
     ims.append(img)
+    
+#描画
+anime = animation.ArtistAnimation(fig, ims, interval = 10)
+anime.save("pulse.html", writer=animation.HTMLWriter())
 
 
 
