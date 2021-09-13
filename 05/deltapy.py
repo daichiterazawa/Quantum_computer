@@ -1,9 +1,10 @@
 """
-無限に深い井戸型ポテンシャルに対する固有状態
+異なるエネルギー順位をもつ波動関数の内積が0の証明
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 ####################################
 #物理定数
@@ -41,19 +42,18 @@ x_num = 400
 x = np.linspace(-L/2,L/2, x_num)
 
 
-
 #波動関数計算
 psi0 = np.sqrt(2/L) * np.sin(k0*(x+L/2))
 psi1 = np.sqrt(2/L) * np.sin(k1*(x+L/2))
 psi2 = np.sqrt(2/L) * np.sin(k2*(x+L/2))
 psi3 = np.sqrt(2/L) * np.sin(k3*(x+L/2))
-psi4 = np.sqrt(2/L) * np.sin(k4*(x+L/2))
-psi5 = np.sqrt(2/L) * np.sin(k5*(x+L/2))
+psi = [psi0, psi1, psi2, psi3]
+a = psi0 * psi1
 
-
-plt.plot(x, psi0, color='blue')
-plt.plot(x, psi1, color='orange')
-plt.plot(x, psi2, color='green')
-plt.plot(x, psi3, color='red')
-plt.show()
+#積分計算
+result = np.zeros((4,4))
+for i in range(4):
+    for j in range(4):
+        result[i,j] = np.sum((L/x_num) * (psi[i] * psi[j]))
+        
 
